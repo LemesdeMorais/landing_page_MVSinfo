@@ -362,70 +362,30 @@
         </div>
     </section>
 
-    <section id="contato" class="py-5">
-        <div class="container text-center">
-            <h2 data-i18n="contact.title">Contato</h2>
-            <form id="contatoForm" class="text-start mx-auto" style="max-width: 500px;">
-                <div class="mb-3">
-                    <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="email" required>
-                </div>
-                <div class="mb-3">
-                    <label for="mensagem" class="form-label">Mensagem</label>
-                    <textarea class="form-control" id="mensagem" rows="5" required></textarea>
-                </div>
-                <div id="mensagemStatus" class="my-3 text-center fw-bold"></div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
+    <form id="contatoForm" action="https://formspree.io/f/mkgrazyr" method="POST" class="text-start mx-auto"
+        style="max-width: 500px;">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
         </div>
-    </section>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="mensagem" class="form-label">Mensagem</label>
+            <textarea class="form-control" id="mensagem" name="mensagem" rows="5" required></textarea>
+        </div>
+        <input type="hidden" name="_next" value="https://mvsinfo.com.br/obrigado.html">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/carousel.js"></script>
 
     <script>
-        document.getElementById("contatoForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            const nome = document.getElementById("nome").value;
-            const email = document.getElementById("email").value;
-            const mensagem = document.getElementById("mensagem").value;
-            const statusDiv = document.getElementById("mensagemStatus");
-
-            try {
-                const resposta = await fetch("http://localhost:3001/enviar", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ nome, email, mensagem }),
-                });
-
-                const resultado = await resposta.json();
-
-                if (resposta.ok) {
-                    statusDiv.innerText = "Mensagem enviada com sucesso!";
-                    statusDiv.classList.add("text-success");
-                    statusDiv.classList.remove("text-danger");
-                    document.getElementById("contatoForm").reset();
-                } else {
-                    statusDiv.innerText = "Erro ao enviar: " + resultado.error;
-                    statusDiv.classList.add("text-danger");
-                    statusDiv.classList.remove("text-success");
-                }
-            } catch (erro) {
-                statusDiv.innerText = "Erro de conexão com o servidor.";
-                statusDiv.classList.add("text-danger");
-                statusDiv.classList.remove("text-success");
-            }
-        });
-
-
         function toggleTexto(card) {
             const texto = card.querySelector('.texto-produto');
             if (texto) {
